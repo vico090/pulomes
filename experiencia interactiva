@@ -1,0 +1,63 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+
+const images = [
+  {
+    name: "Tráquea",
+    file: "/images/traquea.jpg",
+    description: "La tráquea es un tubo por donde viaja el aire hacia los pulmones. Aquí puedes verla en una imagen real."
+  },
+  {
+    name: "Pulmones",
+    file: "/images/pulmon.jpg",
+    description: "Los pulmones son como dos esponjas que toman oxígeno del aire."
+  },
+  {
+    name: "Bronquios",
+    file: "/images/bronquios.jpg",
+    description: "Los bronquios son tubos que llevan el aire a cada parte del pulmón."
+  }
+];
+
+export default function RealBodyExplorer() {
+  const [step, setStep] = useState(0);
+  const [showTrivia, setShowTrivia] = useState(false);
+
+  const nextStep = () => {
+    if (step < images.length - 1) setStep(step + 1);
+    else setShowTrivia(true);
+  };
+
+  return (
+    <div className="p-4 max-w-xl mx-auto space-y-4">
+      <Card className="bg-sky-100">
+        <CardContent className="p-4">
+          <h2 className="text-xl font-bold mb-2">🧠 Explorando el cuerpo real con Pulmo</h2>
+          <img
+            src={images[step].file}
+            alt={images[step].name}
+            className="rounded-xl shadow-md mb-4"
+          />
+          <p className="text-lg font-medium">{images[step].description}</p>
+          <div className="mt-4 flex justify-end">
+            <Button onClick={nextStep}>
+              {step < images.length - 1 ? "Ver siguiente" : "¡Comenzar trivia!"}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {showTrivia && (
+        <Card className="bg-yellow-100">
+          <CardContent className="p-4">
+            <h3 className="text-lg font-bold mb-2">🎮 Trivia: ¿Qué parte estás viendo?</h3>
+            {/* Aquí se puede agregar el juego con selección múltiple */}
+            <p className="text-md">(Este juego está en desarrollo 😊)</p>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
